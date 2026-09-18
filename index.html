@@ -3,21 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>香草貝兒｜房況查詢</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   background:#f8f5f0;
   color:#4b3b32;
-  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    sans-serif;
 }
 
 .top{
   text-align:center;
-  padding:14px 10px 8px;
+  padding:16px 10px 8px;
   color:#987d6d;
   font-size:14px;
 }
@@ -83,7 +92,7 @@ select{
 .child-ages{
   margin-top:10px;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:8px;
 }
 
@@ -97,35 +106,20 @@ select{
   font-size:14px;
 }
 
-button{
+.search-button{
   width:100%;
-  height:48px;
+  height:50px;
   border:0;
   border-radius:14px;
   background:#7d6454;
   color:#fff;
   font-size:16px;
   font-weight:600;
-  margin-top:14px;
+  margin-top:16px;
   cursor:pointer;
 }
 
-.line-button{
-  display:block;
-  width:100%;
-  height:50px;
-  line-height:50px;
-  text-align:center;
-  border-radius:14px;
-  background:#06c755;
-  color:#fff;
-  text-decoration:none;
-  font-size:16px;
-  font-weight:600;
-  margin-top:14px;
-}
-
-.line-button:hover{
+.search-button:hover{
   opacity:.9;
 }
 
@@ -164,6 +158,36 @@ button{
   background:#e96b63;
 }
 
+
+/* ========================================
+   LINE 按鈕
+======================================== */
+
+.line-button{
+  display:block;
+  width:100%;
+  min-height:52px;
+  line-height:52px;
+  text-align:center;
+  border-radius:15px;
+  background:#06c755;
+  color:#ffffff;
+  text-decoration:none;
+  font-size:17px;
+  font-weight:700;
+  margin-top:14px;
+  box-shadow:0 5px 12px rgba(6,199,85,.18);
+}
+
+.line-button:hover{
+  opacity:.9;
+}
+
+
+/* ========================================
+   日曆
+======================================== */
+
 .calendar-card{
   padding:18px;
   margin-top:14px;
@@ -180,6 +204,8 @@ button{
   width:42px;
   height:42px;
   margin:0;
+  border:0;
+  border-radius:12px;
   background:#f2ece5;
   color:#765e4e;
   font-size:22px;
@@ -238,6 +264,11 @@ button{
   background:transparent;
 }
 
+
+/* ========================================
+   手機版
+======================================== */
+
 @media(max-width:560px){
 
   .row{
@@ -256,54 +287,120 @@ button{
   .day{
     min-height:60px;
   }
+
+  .line-button{
+    font-size:16px;
+  }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <div class="top">
   寵物友善包棟民宿・房況查詢
 </div>
 
 
+
 <section class="card">
 
-<h2>🗓️ 查詢住宿日期</h2>
+
+<h2>
+🗓️ 查詢住宿日期
+</h2>
+
 
 
 <div class="row">
 
-<div>
-<label>入住日期</label>
-<input id="checkin" type="date">
-</div>
 
 <div>
-<label>退房日期</label>
-<input id="checkout" type="date">
-</div>
+
+<label>
+入住日期
+</label>
+
+<input
+  id="checkin"
+  type="date"
+>
 
 </div>
+
+
+
+<div>
+
+<label>
+退房日期
+</label>
+
+<input
+  id="checkout"
+  type="date"
+>
+
+</div>
+
+
+</div>
+
+
+
+<!-- ========================================
+     人數
+======================================== -->
 
 
 <div class="people">
 
 
+<!-- 大人 -->
+
 <div class="person-box">
 
-<label>👨‍👩‍👧 大人</label>
+<label>
+👨‍👩‍👧 大人
+</label>
 
 <select id="adults">
 
-<option value="1">1 位</option>
-<option value="2" selected>2 位</option>
-<option value="3">3 位</option>
-<option value="4">4 位</option>
-<option value="5">5 位</option>
-<option value="6">6 位</option>
-<option value="7">7 位</option>
-<option value="8">8 位</option>
+<option value="1">
+1 位
+</option>
+
+<option value="2" selected>
+2 位
+</option>
+
+<option value="3">
+3 位
+</option>
+
+<option value="4">
+4 位
+</option>
+
+<option value="5">
+5 位
+</option>
+
+<option value="6">
+6 位
+</option>
+
+<option value="7">
+7 位
+</option>
+
+<option value="8">
+8 位
+</option>
 
 </select>
 
@@ -311,79 +408,199 @@ button{
 
 
 
+<!-- 小孩 -->
+
 <div class="person-box">
 
-<label>🧒 小孩</label>
+<label>
+🧒 小孩
+</label>
 
-<select id="children" onchange="renderChildAges()">
+<select
+  id="children"
+  onchange="renderChildAges()"
+>
 
-<option value="0" selected>0 位</option>
-<option value="1">1 位</option>
-<option value="2">2 位</option>
-<option value="3">3 位</option>
-<option value="4">4 位</option>
-<option value="5">5 位</option>
-<option value="6">6 位</option>
-<option value="7">7 位</option>
-<option value="8">8 位</option>
+<option value="0" selected>
+0 位
+</option>
+
+<option value="1">
+1 位
+</option>
+
+<option value="2">
+2 位
+</option>
+
+<option value="3">
+3 位
+</option>
+
+<option value="4">
+4 位
+</option>
+
+<option value="5">
+5 位
+</option>
+
+<option value="6">
+6 位
+</option>
+
+<option value="7">
+7 位
+</option>
+
+<option value="8">
+8 位
+</option>
 
 </select>
 
-<div id="childAges" class="child-ages"></div>
+
+<div
+  id="childAges"
+  class="child-ages"
+></div>
+
 
 </div>
 
 
 
+<!-- 毛孩 -->
+
 <div class="person-box">
 
-<label>🐾 毛孩</label>
+<label>
+🐾 毛孩
+</label>
 
 <select id="pets">
 
-<option value="0" selected>0 隻</option>
-<option value="1">1 隻</option>
-<option value="2">2 隻</option>
-<option value="3">3 隻</option>
-<option value="4">4 隻</option>
-<option value="5">5 隻</option>
-<option value="6">6 隻</option>
-<option value="7">7 隻</option>
-<option value="8">8 隻</option>
+<option value="0" selected>
+0 隻
+</option>
+
+<option value="1">
+1 隻
+</option>
+
+<option value="2">
+2 隻
+</option>
+
+<option value="3">
+3 隻
+</option>
+
+<option value="4">
+4 隻
+</option>
+
+<option value="5">
+5 隻
+</option>
+
+<option value="6">
+6 隻
+</option>
+
+<option value="7">
+7 隻
+</option>
+
+<option value="8">
+8 隻
+</option>
 
 </select>
 
 </div>
 
+
 </div>
 
 
-<button onclick="checkBooking()">
+
+<!-- ========================================
+     查詢按鈕
+======================================== -->
+
+<button
+  class="search-button"
+  onclick="checkBooking()"
+>
+
 🔍 查詢房況
+
 </button>
 
 
+
+<!-- 查詢結果 -->
+
 <div id="result"></div>
+
+
+
+<!-- ========================================
+     LINE 固定按鈕
+======================================== -->
+
+<a
+  href="https://line.me/R/ti/p/@812xoprs"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="line-button"
+>
+
+💚 立即 LINE 詢問訂房
+
+</a>
+
 
 </section>
 
 
 
+<!-- ========================================
+     日曆
+======================================== -->
+
+
 <section class="card calendar-card">
+
 
 <div class="cal-head">
 
-<button class="nav" onclick="changeMonth(-1)">
+
+<button
+  class="nav"
+  onclick="changeMonth(-1)"
+>
 ‹
 </button>
 
-<div id="monthTitle" class="month"></div>
 
-<button class="nav" onclick="changeMonth(1)">
+<div
+  id="monthTitle"
+  class="month"
+></div>
+
+
+<button
+  class="nav"
+  onclick="changeMonth(1)"
+>
 ›
 </button>
 
+
 </div>
+
 
 
 <div class="week">
@@ -399,7 +616,12 @@ button{
 </div>
 
 
-<div id="days" class="days"></div>
+
+<div
+  id="days"
+  class="days"
+></div>
+
 
 </section>
 
@@ -416,22 +638,25 @@ const API =
 "https://script.google.com/macros/s/AKfycbyk2rGhw0sSKTl6BrKBN1-shZzJ0yWYsZjmDazgRHvWM1gFEyuYZ_vqFRTDh06FOkYV7g/exec";
 
 
+
 /************************************************
- * LINE 官方帳號
+ * LINE
  ************************************************/
 
 const LINE_URL =
 "https://line.me/R/ti/p/@812xoprs";
 
 
+
 let calendarData = [];
 
-let viewDate = new Date();
+let viewDate =
+new Date();
 
 
 
 /************************************************
- * 日期工具
+ * 日期
  ************************************************/
 
 function pad(n){
@@ -464,23 +689,38 @@ function renderChildAges(){
 
 const n =
 Number(
-document.getElementById("children").value
+document.getElementById(
+"children"
+).value
 );
 
+
 const box =
-document.getElementById("childAges");
+document.getElementById(
+"childAges"
+);
+
 
 box.innerHTML="";
 
 
-for(let i=1;i<=n;i++){
+for(
+let i=1;
+i<=n;
+i++
+){
 
 const wrap =
-document.createElement("div");
+document.createElement(
+"div"
+);
 
-wrap.className="age-item";
 
-wrap.innerHTML=`
+wrap.className =
+"age-item";
+
+
+wrap.innerHTML = `
 
 第${i}位
 
@@ -488,10 +728,10 @@ wrap.innerHTML=`
 
 ${Array.from(
 {length:8},
-(_,a)=>`
+(_,age)=>`
 
-<option value="${a}">
-${a} 歲
+<option value="${age}">
+${age} 歲
 </option>
 
 `
@@ -500,6 +740,7 @@ ${a} 歲
 </select>
 
 `;
+
 
 box.appendChild(wrap);
 
@@ -516,7 +757,11 @@ box.appendChild(wrap);
 function getChildAges(){
 
 return [
-...document.querySelectorAll(".child-age")
+
+...document.querySelectorAll(
+".child-age"
+)
+
 ].map(
 x=>Number(x.value)
 );
@@ -526,16 +771,26 @@ x=>Number(x.value)
 
 
 /************************************************
- * 讀取房況
+ * JSONP 房況
  ************************************************/
 
 function loadCalendar(){
 
-return new Promise((resolve,reject)=>{
+return new Promise(
+(resolve,reject)=>{
+
 
 const callbackName =
 "calendarCallback_" +
 Date.now();
+
+
+
+const script =
+document.createElement(
+"script"
+);
+
 
 
 window[callbackName] =
@@ -557,7 +812,9 @@ resolve(data);
 
 finally{
 
-delete window[callbackName];
+delete window[
+callbackName
+];
 
 script.remove();
 
@@ -565,9 +822,6 @@ script.remove();
 
 };
 
-
-const script =
-document.createElement("script");
 
 
 script.src =
@@ -577,21 +831,29 @@ API +
 callbackName;
 
 
+
 script.onerror =
 function(){
 
-delete window[callbackName];
+delete window[
+callbackName
+];
 
 script.remove();
 
 reject(
-new Error("API讀取失敗")
+new Error(
+"API讀取失敗"
+)
 );
 
 };
 
 
-document.body.appendChild(script);
+
+document.body.appendChild(
+script
+);
 
 });
 
@@ -600,7 +862,101 @@ document.body.appendChild(script);
 
 
 /************************************************
- * 顯示月曆
+ * JSONP 查詢住宿
+ ************************************************/
+
+function checkBookingJSONP(
+checkin,
+checkout
+){
+
+return new Promise(
+(resolve,reject)=>{
+
+
+const callbackName =
+"checkCallback_" +
+Date.now();
+
+
+
+const script =
+document.createElement(
+"script"
+);
+
+
+
+window[callbackName] =
+function(data){
+
+try{
+
+resolve(data);
+
+}
+
+finally{
+
+delete window[
+callbackName
+];
+
+script.remove();
+
+}
+
+};
+
+
+
+script.src =
+API +
+"?action=check" +
+"&checkin=" +
+encodeURIComponent(
+checkin
+) +
+"&checkout=" +
+encodeURIComponent(
+checkout
+) +
+"&callback=" +
+callbackName;
+
+
+
+script.onerror =
+function(){
+
+delete window[
+callbackName
+];
+
+script.remove();
+
+reject(
+new Error(
+"API查詢失敗"
+)
+);
+
+};
+
+
+
+document.body.appendChild(
+script
+);
+
+});
+
+}
+
+
+
+/************************************************
+ * 日曆
  ************************************************/
 
 function renderCalendar(){
@@ -608,8 +964,10 @@ function renderCalendar(){
 const y =
 viewDate.getFullYear();
 
+
 const m =
 viewDate.getMonth();
+
 
 
 document.getElementById(
@@ -618,31 +976,54 @@ document.getElementById(
 `${y} 年 ${m+1} 月`;
 
 
+
 const first =
-new Date(y,m,1).getDay();
+new Date(
+y,
+m,
+1
+).getDay();
+
 
 
 const total =
-new Date(y,m+1,0).getDate();
+new Date(
+y,
+m+1,
+0
+).getDate();
 
 
-const map={};
+
+const map = {};
 
 
-calendarData.forEach(x=>{
 
-map[x.date]=x;
+calendarData.forEach(
+x=>{
+
+map[x.date] =
+x;
 
 });
 
 
+
 const box =
-document.getElementById("days");
+document.getElementById(
+"days"
+);
+
 
 box.innerHTML="";
 
 
-for(let i=0;i<first;i++){
+
+for(
+let i=0;
+i<first;
+i++
+){
 
 box.innerHTML +=
 '<div class="day empty"></div>';
@@ -650,28 +1031,44 @@ box.innerHTML +=
 }
 
 
-for(let d=1;d<=total;d++){
+
+for(
+let d=1;
+d<=total;
+d++
+){
 
 const k =
-key(y,m,d);
+key(
+y,
+m,
+d
+);
+
 
 
 const x =
 map[k] || {
 
 status:"可訂房",
+
 type:"平日"
 
 };
 
 
+
 const full =
-x.status==="已訂滿" ||
-x.status==="已訂";
+x.status==="已訂" ||
+x.status==="已訂滿";
+
 
 
 const el =
-document.createElement("div");
+document.createElement(
+"div"
+);
+
 
 
 el.className =
@@ -688,7 +1085,8 @@ x.type==="假日"
 );
 
 
-el.innerHTML=`
+
+el.innerHTML = `
 
 ${d}
 
@@ -711,7 +1109,9 @@ x.type==="假日"
 `;
 
 
-box.appendChild(el);
+box.appendChild(
+el
+);
 
 }
 
@@ -720,17 +1120,22 @@ box.appendChild(el);
 
 
 /************************************************
- * 切換月份
+ * 換月份
  ************************************************/
 
 function changeMonth(n){
 
 viewDate =
 new Date(
+
 viewDate.getFullYear(),
+
 viewDate.getMonth()+n,
+
 1
+
 );
+
 
 renderCalendar();
 
@@ -739,49 +1144,75 @@ renderCalendar();
 
 
 /************************************************
- * 查詢房況
+ * 查詢
  ************************************************/
 
 async function checkBooking(){
 
+
 const ci =
-document.getElementById("checkin").value;
+document.getElementById(
+"checkin"
+).value;
+
 
 
 const co =
-document.getElementById("checkout").value;
+document.getElementById(
+"checkout"
+).value;
+
 
 
 const adults =
 Number(
-document.getElementById("adults").value
+document.getElementById(
+"adults"
+).value
 );
+
 
 
 const children =
 Number(
-document.getElementById("children").value
+document.getElementById(
+"children"
+).value
 );
+
 
 
 const pets =
 Number(
-document.getElementById("pets").value
+document.getElementById(
+"pets"
+).value
 );
+
 
 
 const ages =
 getChildAges();
 
 
+
 const result =
-document.getElementById("result");
+document.getElementById(
+"result"
+);
 
 
 
-if(!ci || !co){
+/**********************************************
+ * 日期檢查
+ **********************************************/
 
-result.innerHTML=`
+if(
+!ci ||
+!co
+){
+
+result.innerHTML = `
 
 <div class="result bad">
 
@@ -799,9 +1230,11 @@ return;
 
 
 
-if(co<=ci){
+if(
+co <= ci
+){
 
-result.innerHTML=`
+result.innerHTML = `
 
 <div class="result bad">
 
@@ -819,12 +1252,12 @@ return;
 
 
 
+/**********************************************
+ * 查詢
+ **********************************************/
+
 try{
 
-
-/************************************************
- * 使用 JSONP 查詢
- ************************************************/
 
 const data =
 await checkBookingJSONP(
@@ -834,9 +1267,9 @@ co
 
 
 
-/************************************************
- * 計算晚數
- ************************************************/
+/**********************************************
+ * 計算住宿晚數
+ **********************************************/
 
 const d1 =
 new Date(
@@ -850,6 +1283,7 @@ co+"T00:00:00"
 );
 
 
+
 let nights=0;
 
 let holidayNights=0;
@@ -857,19 +1291,25 @@ let holidayNights=0;
 let weekdayNights=0;
 
 
-const map={};
+
+const map = {};
 
 
-calendarData.forEach(x=>{
+
+calendarData.forEach(
+x=>{
 
 map[x.date]=x;
 
 });
 
 
+
 for(
 let d=new Date(d1);
+
 d<d2;
+
 d.setDate(
 d.getDate()+1
 )
@@ -878,12 +1318,14 @@ d.getDate()+1
 nights++;
 
 
+
 const k =
 key(
 d.getFullYear(),
 d.getMonth(),
 d.getDate()
 );
+
 
 
 if(
@@ -912,25 +1354,33 @@ children
 
 
 
-/************************************************
+/**********************************************
  * 可以訂房
- ************************************************/
+ **********************************************/
 
-if(data.available){
+if(
+data.available
+){
 
-result.innerHTML=`
+result.innerHTML = `
 
 <div class="result">
 
 <h3>
+
 <span class="dot"></span>
+
 可以訂房
+
 </h3>
 
 
 <p>
+
 ${formatDate(ci)}
+
 ～
+
 ${formatDate(co)}
 
 共
@@ -943,34 +1393,38 @@ ${nights} 晚
 
 
 <p>
+
 大人 ${adults} 位
+
 ・
+
 小孩 ${children} 位
+
 ${agesText}
+
 ・
+
 毛孩 ${pets} 隻
+
 </p>
 
 
 <p>
+
 平日 ${weekdayNights} 晚
+
 ・
+
 假日 ${holidayNights} 晚
+
 </p>
 
 
 <p>
+
 本次住宿期間目前皆可預訂。
+
 </p>
-
-
-<a
-href="${LINE_URL}"
-target="_blank"
-class="line-button"
->
-💚 立即 LINE 詢問訂房
-</a>
 
 </div>
 
@@ -980,38 +1434,52 @@ class="line-button"
 
 
 
-/************************************************
+/**********************************************
  * 無法訂房
- ************************************************/
+ **********************************************/
 
 else{
 
-result.innerHTML=`
+result.innerHTML = `
 
 <div class="result bad">
 
 <h3>
+
 <span class="dot"></span>
+
 目前無法訂房
+
 </h3>
 
 
 <p>
+
 ${formatDate(ci)}
+
 ～
+
 ${formatDate(co)}
 
 的住宿期間已有已訂日期。
+
 </p>
 
 
 <p>
+
 大人 ${adults} 位
+
 ・
+
 小孩 ${children} 位
+
 ${agesText}
+
 ・
+
 毛孩 ${pets} 隻
+
 </p>
 
 </div>
@@ -1020,15 +1488,16 @@ ${agesText}
 
 }
 
+
 }
 
 
-catch(e){
+catch(error){
 
-console.error(e);
+console.error(error);
 
 
-result.innerHTML=`
+result.innerHTML = `
 
 <div class="result bad">
 
@@ -1051,85 +1520,12 @@ result.innerHTML=`
 
 
 /************************************************
- * JSONP 查詢
- ************************************************/
-
-function checkBookingJSONP(
-checkin,
-checkout
-){
-
-return new Promise(
-(resolve,reject)=>{
-
-const callbackName =
-"checkCallback_" +
-Date.now();
-
-
-window[callbackName] =
-function(data){
-
-try{
-
-resolve(data);
-
-}
-
-finally{
-
-delete window[callbackName];
-
-script.remove();
-
-}
-
-};
-
-
-const script =
-document.createElement("script");
-
-
-script.src =
-API +
-"?action=check" +
-"&checkin=" +
-encodeURIComponent(checkin) +
-"&checkout=" +
-encodeURIComponent(checkout) +
-"&callback=" +
-callbackName;
-
-
-script.onerror =
-function(){
-
-delete window[callbackName];
-
-script.remove();
-
-reject(
-new Error("API查詢失敗")
-);
-
-};
-
-
-document.body.appendChild(script);
-
-});
-
-}
-
-
-
-/************************************************
  * 預設日期
  ************************************************/
 
 const now =
 new Date();
+
 
 
 document.getElementById(
@@ -1138,13 +1534,16 @@ document.getElementById(
 `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
 
 
+
 const tomorrow =
 new Date(now);
+
 
 
 tomorrow.setDate(
 tomorrow.getDate()+1
 );
+
 
 
 document.getElementById(
@@ -1160,12 +1559,16 @@ document.getElementById(
 
 renderChildAges();
 
+
 loadCalendar()
-.catch(error=>{
+.catch(
+error=>{
 
 console.error(error);
 
-document.getElementById("days").innerHTML=`
+document.getElementById(
+"days"
+).innerHTML = `
 
 <div
 style="
@@ -1183,8 +1586,8 @@ padding:30px;
 
 });
 
-
 </script>
+
 
 </body>
 </html>
