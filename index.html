@@ -1,264 +1,156 @@
-<!doctype html>
-<html lang="zh-Hant">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f7f2eb">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>香草貝兒｜房況查詢</title>
 <style>
-:root{
- --bg:#f8f4ee;--card:#fffdf9;--text:#51463d;--muted:#9a897c;
- --green:#6d9b76;--green-bg:#edf6ef;--red:#c96e65;--red-bg:#fae7e3;
- --gold:#c59d48;--gold-bg:#fff7df;--line:#eee3d9;--brown:#765d4d;
-}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 20% 0%,#fffdf9 0,#f8f4ee 38%,#f3eee7 100%);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif}
-button,input{font:inherit}
-.wrap{max-width:680px;margin:auto;padding:18px 15px 46px}
-.hero{text-align:center;padding:15px 8px 20px}
-.mark{width:68px;height:68px;margin:auto;border-radius:24px;background:#fff;display:grid;place-items:center;font-size:35px;box-shadow:0 8px 25px rgba(85,65,45,.08)}
-h1{font-size:30px;margin:10px 0 3px;letter-spacing:1px}
-.subtitle{font-size:14px;color:var(--muted)}
-.card{background:rgba(255,253,249,.96);border:1px solid rgba(238,227,217,.8);border-radius:24px;padding:19px;box-shadow:0 10px 32px rgba(80,60,40,.07);margin-top:13px}
-.card-title{font-weight:800;font-size:18px;margin-bottom:14px}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-label{display:block;color:var(--muted);font-size:13px;margin:0 0 6px}
-input[type=date]{width:100%;padding:12px 11px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--text);outline:none}
-input[type=date]:focus{border-color:#bba18d;box-shadow:0 0 0 3px rgba(187,161,141,.13)}
-.primary{width:100%;margin-top:12px;border:0;border-radius:14px;padding:13px;background:var(--brown);color:#fff;font-weight:800;cursor:pointer}
-.primary:active{transform:translateY(1px)}
-.result{display:none;margin-top:13px;border-radius:16px;padding:15px;line-height:1.65}
-.result.show{display:block}
-.result.ok{background:var(--green-bg);color:#426a4a}
-.result.bad{background:var(--red-bg);color:#8d4842}
-.result.warn{background:var(--gold-bg);color:#765d25}
-.result .big{font-size:19px;font-weight:900}
-.result small{display:block;margin-top:3px;opacity:.85}
-.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.month{font-size:19px;font-weight:900}
-.navbtn{width:42px;height:40px;border:0;border-radius:13px;background:#f2ebe3;color:var(--brown);font-size:24px;cursor:pointer}
-.week,.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
-.week div{text-align:center;color:var(--muted);font-size:12px;padding:4px 0 7px}
-.day{min-height:67px;border-radius:13px;background:var(--green-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.day .num{font-weight:800;font-size:15px}
-.day .tag{font-size:9px;margin-top:3px;white-space:nowrap}
-.day.booked{background:var(--red-bg);color:#934d47}
-.day.holiday{box-shadow:inset 0 -4px 0 var(--gold)}
-.day.today{outline:2px solid #b79b86;outline-offset:-2px}
-.day.empty{background:transparent}
-.legend{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:15px;color:var(--muted);font-size:12px}
-.legend span{display:inline-flex;align-items:center;gap:5px}
-.dot{width:10px;height:10px;border-radius:4px;display:inline-block}
-.dot.g{background:var(--green)}.dot.r{background:var(--red)}.dot.y{background:var(--gold)}
-.sync{text-align:center;color:var(--muted);font-size:11px;margin-top:10px}
-.tip{background:#f5eee6;border-radius:15px;padding:13px 14px;color:#78685c;font-size:12px;line-height:1.7;margin-top:13px}
-.footer{text-align:center;color:var(--muted);font-size:12px;line-height:1.7;padding-top:18px}
-.footer strong{color:var(--brown)}
-@media(max-width:480px){
- .wrap{padding-left:11px;padding-right:11px}
- .fields{grid-template-columns:1fr}
- .card{padding:15px;border-radius:20px}
- .day{min-height:58px;border-radius:10px}
- .day .tag{font-size:8px}
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif;background:#f6f3ed;color:#4b4b4b}
+.container{width:min(94%,560px);margin:auto;padding:24px 0 50px}
+.header{text-align:center;margin-bottom:22px}
+.logo{font-size:32px;font-weight:700;color:#6f8f72}.subtitle{margin-top:6px;font-size:14px;color:#888}
+.card{background:#fff;border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 4px 18px rgba(0,0,0,.05)}
+.section-title{font-size:18px;font-weight:700;margin-bottom:15px;color:#526b55}
+label{display:block;font-size:14px;margin-bottom:7px;color:#666}
+input[type=date],select{width:100%;height:46px;border:1px solid #ddd;border-radius:12px;padding:0 12px;font-size:16px;background:#fff}
+.date-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.people-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee}
+.people-row:last-child{border-bottom:0}
+.people-name{font-size:16px;font-weight:600}.counter{display:flex;align-items:center;gap:12px}
+.counter button{width:36px;height:36px;border:0;border-radius:50%;background:#edf3ed;color:#5d7c61;font-size:22px;cursor:pointer}
+.counter-value{min-width:25px;text-align:center;font-size:17px;font-weight:700}
+.children-list{margin-top:12px}.child-item{display:grid;grid-template-columns:1fr 130px;gap:10px;align-items:center;margin-bottom:10px}
+.child-name{font-size:14px;color:#666}
+.search-button,.contact-button{width:100%;height:52px;border:0;border-radius:14px;background:#6f8f72;color:#fff;font-size:18px;font-weight:700;cursor:pointer}
+.result{display:none}.result.success{border:2px solid #8db28f;background:#f4faf4}.result.fail{border:2px solid #d99a9a;background:#fff6f6}
+.result-title{font-size:23px;font-weight:800;margin-bottom:15px}.success .result-title{color:#507653}.fail .result-title{color:#a45252}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}.summary-item{background:rgba(255,255,255,.8);border-radius:12px;padding:12px}
+.summary-label{font-size:13px;color:#888}.summary-value{font-size:17px;font-weight:700;margin-top:3px}
+.day-count{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.day-box{border-radius:12px;padding:13px;text-align:center}
+.weekday-box{background:#edf7ee;color:#527455}.holiday-box{background:#fff1c9;color:#956f18}
+.day-box-number{font-size:24px;font-weight:800}.day-box-label{font-size:13px}
+.date-detail{margin-top:15px}.date-detail-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.date-line{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee;font-size:14px}
+.badge{border-radius:20px;padding:4px 9px;font-size:12px;font-weight:700}.badge-weekday{background:#e7f3e8;color:#547557}.badge-holiday{background:#fff0bd;color:#8c6917}.badge-booked{background:#f5dede;color:#a34d4d}
+.note{font-size:12px;color:#999;line-height:1.6;text-align:center;margin-top:18px}.sync-status{text-align:center;font-size:12px;color:#999;margin-top:12px}.loading{text-align:center;padding:15px;color:#777}
+@media(max-width:420px){.date-row{grid-template-columns:1fr}.child-item{grid-template-columns:1fr 110px}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="container">
+<div class="header"><div class="logo">🐻 香草貝兒</div><div class="subtitle">寵物友善民宿｜房況查詢</div></div>
 
-<header class="hero">
-  <div class="mark">🐾</div>
-  <h1>香草貝兒</h1>
-  <div class="subtitle">寵物友善包棟民宿・房況查詢</div>
-</header>
-
-<section class="card">
-  <div class="card-title">📅 查詢住宿日期</div>
-  <div class="fields">
-    <div>
-      <label for="checkin">入住日期</label>
-      <input id="checkin" type="date">
-    </div>
-    <div>
-      <label for="checkout">退房日期</label>
-      <input id="checkout" type="date">
-    </div>
-  </div>
-  <button class="primary" id="searchBtn">🔍 查詢房況</button>
-  <div id="result" class="result"></div>
-</section>
-
-<section class="card">
-  <div class="calendar-head">
-    <button class="navbtn" id="prev" aria-label="上一個月">‹</button>
-    <div class="month" id="month"></div>
-    <button class="navbtn" id="next" aria-label="下一個月">›</button>
-  </div>
-
-  <div class="week">
-    <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
-  </div>
-  <div id="grid" class="grid"></div>
-
-  <div class="legend">
-    <span><i class="dot g"></i>可預訂</span>
-    <span><i class="dot r"></i>已滿房</span>
-    <span><i class="dot y"></i>假日</span>
-  </div>
-  <div class="sync" id="sync">正在同步房況…</div>
-</section>
-
-<div class="tip">
-  💡 <strong>查詢方式</strong><br>
-  選擇入住及退房日期後按「查詢房況」。系統會檢查整段住宿期間是否已有訂房。
+<div class="card">
+<div class="section-title">📅 住宿日期</div>
+<div class="date-row">
+<div><label for="checkIn">入住日期</label><input type="date" id="checkIn"></div>
+<div><label for="checkOut">退房日期</label><input type="date" id="checkOut"></div>
+</div>
 </div>
 
-<div class="footer">
-  <strong>香草貝兒</strong><br>
-  實際訂房狀況及房價以民宿確認為準
+<div class="card">
+<div class="section-title">👨‍👩‍👧‍👦 入住人數</div>
+
+<div class="people-row">
+<div class="people-name">👨 大人</div>
+<div class="counter"><button type="button" onclick="changePeople('adults',-1)">−</button><div id="adultsValue" class="counter-value">2</div><button type="button" onclick="changePeople('adults',1)">＋</button></div>
 </div>
 
+<div class="people-row">
+<div class="people-name">👧 小孩</div>
+<div class="counter"><button type="button" onclick="changeChildren(-1)">−</button><div id="childrenValue" class="counter-value">0</div><button type="button" onclick="changeChildren(1)">＋</button></div>
+</div>
+<div id="childrenList" class="children-list"></div>
+
+<div class="people-row">
+<div class="people-name">🐾 毛孩</div>
+<div class="counter"><button type="button" onclick="changePeople('pets',-1)">−</button><div id="petsValue" class="counter-value">0</div><button type="button" onclick="changePeople('pets',1)">＋</button></div>
+</div>
+</div>
+
+<div class="card"><button class="search-button" onclick="checkAvailability()">🔍 查詢房況</button></div>
+<div id="result" class="card result"></div>
+
+<div class="sync-status">🟢 房況資料與後台同步</div>
+<div class="note">房況僅供查詢，實際訂房仍以香草貝兒確認為準。</div>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycby15TpfjEUXpFz3Y6thaxUfr7recCC__qpJKqFseMw8q_o-8MSH0UvKAy80b79ac1DhiQ/exec";
-let booked = new Set();
-let holidays = new Map();
+const API_URL="https://script.google.com/macros/s/AKfycby15TpfjEUXpFz3Y6thaxUfr7recCC__qpJKqFseMw8q_o-8MSH0UvKAy80b79ac1DhiQ/exec";
+let adults=2,children=[],pets=0;
 
-const now = new Date();
-let view = new Date(now.getFullYear(), now.getMonth(), 1);
-
-function pad(n) { return String(n).padStart(2,"0"); }
-function key(d) {
-  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+function changePeople(type,amount){
+ if(type==="adults"){adults=Math.max(0,adults+amount);document.getElementById("adultsValue").textContent=adults}
+ if(type==="pets"){pets=Math.max(0,pets+amount);document.getElementById("petsValue").textContent=pets}
 }
-function pretty(k) { return k.replaceAll("-","/"); }
-
-function dayType(dt) {
-  const k=key(dt);
-  const h=holidays.get(k);
-  if(h && h.type) return h.type;
-  const day=dt.getDay();
-  return (day===5 || day===6) ? "假日" : "平日";
+function changeChildren(amount){
+ if(amount>0&&children.length<20)children.push(0);
+ if(amount<0&&children.length>0)children.pop();
+ document.getElementById("childrenValue").textContent=children.length;
+ renderChildren();
 }
-
-function holidayLabel(dt) {
-  const h=holidays.get(key(dt));
-  if(!h) return "";
-  return h.note || h.type || "假日";
+function renderChildren(){
+ const box=document.getElementById("childrenList");box.innerHTML="";
+ children.forEach((age,index)=>{
+  const row=document.createElement("div");row.className="child-item";
+  const name=document.createElement("div");name.className="child-name";name.textContent="👧 小孩 "+(index+1);
+  const select=document.createElement("select");
+  for(let i=0;i<=7;i++){const o=document.createElement("option");o.value=i;o.textContent=i+" 歲";if(i===age)o.selected=true;select.appendChild(o)}
+  select.addEventListener("change",()=>children[index]=Number(select.value));
+  row.appendChild(name);row.appendChild(select);box.appendChild(row);
+ });
 }
+function parseDate(s){const p=s.split("-");return new Date(Number(p[0]),Number(p[1])-1,Number(p[2]))}
+function formatDate(d){return d.getFullYear()+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+String(d.getDate()).padStart(2,"0")}
+function inputDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function weekday(d){return ["日","一","二","三","四","五","六"][d.getDay()]}
+function getStayDates(a,b){const arr=[];for(let d=new Date(a);d<b;d.setDate(d.getDate()+1))arr.push(new Date(d));return arr}
 
-function render() {
-  const y=view.getFullYear(), m=view.getMonth();
-  document.getElementById("month").textContent=`${y} 年 ${m+1} 月`;
-  const first=new Date(y,m,1).getDay();
-  const last=new Date(y,m+1,0).getDate();
-  const grid=document.getElementById("grid");
-  grid.innerHTML="";
-
-  for(let i=0;i<first;i++) {
-    const e=document.createElement("div");
-    e.className="day empty";
-    grid.appendChild(e);
-  }
-
-  const todayKey=key(new Date());
-
-  for(let d=1;d<=last;d++) {
-    const dt=new Date(y,m,d);
-    const k=key(dt);
-    const isBooked=booked.has(k);
-    const type=dayType(dt);
-    const e=document.createElement("div");
-    e.className="day"+(isBooked?" booked":"")+(type==="假日"?" holiday":"")+(k===todayKey?" today":"");
-
-    let tag = isBooked ? "已滿房" : (type==="假日" ? "假日" : "可預訂");
-    e.innerHTML=`<div class="num">${d}</div><div class="tag">${tag}</div>`;
-
-    if(type==="假日") e.title=holidayLabel(dt);
-    grid.appendChild(e);
-  }
+async function checkAvailability(){
+ const inV=document.getElementById("checkIn").value,outV=document.getElementById("checkOut").value;
+ const result=document.getElementById("result");
+ if(!inV||!outV){showMessage("請先選擇入住及退房日期。");return}
+ const checkIn=parseDate(inV),checkOut=parseDate(outV);
+ if(checkOut<=checkIn){showMessage("退房日期必須晚於入住日期。");return}
+ result.style.display="block";result.className="card result";result.innerHTML='<div class="loading">🔍 正在查詢房況...</div>';
+ try{
+  const r=await fetch(API_URL+"?action=calendar");const data=await r.json();
+  if(!data.success)throw new Error();
+  const booked=data.bookedDates||[],holidays=data.holidays||[],dates=getStayDates(checkIn,checkOut);
+  let bookedCount=0,holidayCount=0,weekdayCount=0,details=[];
+  dates.forEach(d=>{
+   const key=formatDate(d),isBooked=booked.includes(key),h=holidays.find(x=>x.date===key);
+   const type=h?h.type:(d.getDay()===5||d.getDay()===6?"假日":"平日");
+   if(isBooked)bookedCount++;
+   if(type==="假日")holidayCount++;else weekdayCount++;
+   details.push({date:key,weekday:weekday(d),type,booked:isBooked,note:h?h.note:""});
+  });
+  renderResult({available:bookedCount===0,nights:dates.length,holidayCount,weekdayCount,adults,children:[...children],pets,details});
+ }catch(e){showMessage("房況查詢失敗，請稍後再試。")}
 }
-
-async function loadData() {
-  try {
-    const r=await fetch(API_URL+"?action=calendar&ts="+Date.now(),{cache:"no-store"});
-    if(!r.ok) throw new Error("HTTP "+r.status);
-    const data=await r.json();
-
-    booked=new Set(data.bookedDates||[]);
-    holidays=new Map((data.holidays||[]).map(x=>[x.date,x]));
-
-    document.getElementById("sync").textContent="✓ 房況已更新";
-    render();
-  } catch(e) {
-    document.getElementById("sync").textContent="房況更新失敗，請稍後重新整理";
-    render();
-  }
+function showMessage(msg){
+ const r=document.getElementById("result");r.style.display="block";r.className="card result fail";r.innerHTML='<div class="result-title">⚠️ '+msg+'</div>';
 }
-
-function dateRange(start,end) {
-  const out=[];
-  const d=new Date(start+"T00:00:00");
-  const last=new Date(end+"T00:00:00");
-  while(d<last) {
-    out.push(key(d));
-    d.setDate(d.getDate()+1);
-  }
-  return out;
+function renderResult(d){
+ const r=document.getElementById("result");r.style.display="block";r.className="card result "+(d.available?"success":"fail");
+ let guest="👨 "+d.adults+" 位大人";
+ if(d.children.length)guest+="<br>👧 "+d.children.length+" 位小孩（"+d.children.map(a=>a+"歲").join("、")+"）";
+ if(d.pets)guest+="<br>🐾 "+d.pets+" 位毛孩";
+ let detail=d.details.map(x=>{
+  const badge=x.booked?"已訂":x.type,cls=x.booked?"badge-booked":x.type==="假日"?"badge-holiday":"badge-weekday";
+  return '<div class="date-line"><span>'+x.date+'（週'+x.weekday+'）</span><span class="badge '+cls+'">'+badge+'</span></div>';
+ }).join("");
+ r.innerHTML='<div class="result-title">'+(d.available?"🟢 可以訂房":"🔴 目前無法訂房")+'</div>'+
+ '<div class="summary"><div class="summary-item"><div class="summary-label">👨‍👩‍👧‍👦 入住資訊</div><div class="summary-value">'+guest+'</div></div>'+
+ '<div class="summary-item"><div class="summary-label">🌙 住宿晚數</div><div class="summary-value">'+d.nights+' 晚</div></div></div>'+
+ '<div class="day-count"><div class="day-box holiday-box"><div class="day-box-number">'+d.holidayCount+'</div><div class="day-box-label">🟥 假日</div></div>'+
+ '<div class="day-box weekday-box"><div class="day-box-number">'+d.weekdayCount+'</div><div class="day-box-label">🟩 平日</div></div></div>'+
+ '<div class="date-detail"><div class="date-detail-title">📅 住宿日期明細</div>'+detail+'</div>';
 }
-
-function showResult(cls,title,body,small="") {
-  const r=document.getElementById("result");
-  r.className="result show "+cls;
-  r.innerHTML=`<div class="big">${title}</div><div>${body}</div>${small?`<small>${small}</small>`:""}`;
-}
-
-document.getElementById("searchBtn").onclick=()=>{
-  const start=document.getElementById("checkin").value;
-  const end=document.getElementById("checkout").value;
-
-  if(!start || !end) {
-    showResult("warn","⚠️ 請選擇日期","請完整選擇入住日期與退房日期。");
-    return;
-  }
-
-  if(end<=start) {
-    showResult("warn","⚠️ 日期有誤","退房日期必須晚於入住日期。");
-    return;
-  }
-
-  const range=dateRange(start,end);
-  const conflict=range.find(k=>booked.has(k));
-
-  if(conflict) {
-    showResult(
-      "bad",
-      "🔴 目前無法訂房",
-      `${pretty(conflict)} 已有訂房，請更換住宿日期。`,
-      `查詢區間：${pretty(start)} ～ ${pretty(end)}`
-    );
-    return;
-  }
-
-  const holidayDays=range
-    .map(k=>holidays.get(k))
-    .filter(x=>x && x.type==="假日");
-
-  const names=[...new Set(holidayDays.map(x=>x.note).filter(Boolean))];
-
-  showResult(
-    "ok",
-    "🟢 可以訂房",
-    `${pretty(start)} ～ ${pretty(end)} 目前沒有已訂日期。`,
-    names.length ? "期間包含特殊假日："+names.join("、") : "本次住宿期間目前皆可預訂。"
-  );
-};
-
-document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);render();};
-document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);render();};
-
-loadData();
+const today=new Date(),tomorrow=new Date(today);tomorrow.setDate(tomorrow.getDate()+1);
+document.getElementById("checkIn").value=inputDate(today);
+document.getElementById("checkOut").value=inputDate(tomorrow);
 </script>
 </body>
 </html>
