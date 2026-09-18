@@ -177,6 +177,8 @@ select{
   font-weight:700;
   margin-top:14px;
   box-shadow:0 5px 12px rgba(6,199,85,.18);
+  cursor:pointer;
+  border:0;
 }
 
 .line-button:hover{
@@ -210,6 +212,7 @@ select{
   color:#765e4e;
   font-size:22px;
   padding:0;
+  cursor:pointer;
 }
 
 .month{
@@ -547,19 +550,19 @@ select{
 
 
 <!-- ========================================
-     LINE 固定按鈕
+     LINE 自動帶入訂房資料
 ======================================== -->
 
-<a
-  href="https://line.me/R/ti/p/@812xoprs"
-  target="_blank"
-  rel="noopener noreferrer"
+<button
+  type="button"
+  id="lineButton"
   class="line-button"
+  onclick="openLineBooking(event)"
 >
 
 💚 立即 LINE 詢問訂房
 
-</a>
+</button>
 
 
 </section>
@@ -640,11 +643,11 @@ const API =
 
 
 /************************************************
- * LINE
+ * LINE 官方帳號
  ************************************************/
 
-const LINE_URL =
-"https://line.me/R/ti/p/@812xoprs";
+const LINE_ID =
+"@812xoprs";
 
 
 
@@ -1138,6 +1141,212 @@ viewDate.getMonth()+n,
 
 
 renderCalendar();
+
+}
+
+
+
+/************************************************
+ * LINE 自動帶入訂房資料
+ ************************************************/
+
+function openLineBooking(event){
+
+if(event){
+
+event.preventDefault();
+
+}
+
+
+const ci =
+document.getElementById(
+"checkin"
+).value;
+
+
+
+const co =
+document.getElementById(
+"checkout"
+).value;
+
+
+
+const adults =
+Number(
+document.getElementById(
+"adults"
+).value
+);
+
+
+
+const children =
+Number(
+document.getElementById(
+"children"
+).value
+);
+
+
+
+const pets =
+Number(
+document.getElementById(
+"pets"
+).value
+);
+
+
+
+const ages =
+getChildAges();
+
+
+
+/**********************************************
+ * 日期檢查
+ **********************************************/
+
+if(
+!ci ||
+!co
+){
+
+alert(
+"請先選擇入住與退房日期"
+);
+
+return;
+
+}
+
+
+
+if(
+co <= ci
+){
+
+alert(
+"退房日期需晚於入住日期"
+);
+
+return;
+
+}
+
+
+
+/**********************************************
+ * 計算住宿晚數
+ **********************************************/
+
+const d1 =
+new Date(
+ci+"T00:00:00"
+);
+
+
+const d2 =
+new Date(
+co+"T00:00:00"
+);
+
+
+
+let nights=0;
+
+
+
+for(
+let d=new Date(d1);
+
+d<d2;
+
+d.setDate(
+d.getDate()+1
+)
+){
+
+nights++;
+
+}
+
+
+
+/**********************************************
+ * 小孩文字
+ **********************************************/
+
+let childrenText =
+"🧒 小孩：0位";
+
+
+if(children > 0){
+
+childrenText =
+`🧒 小孩：${children}位`;
+
+
+
+if(ages.length > 0){
+
+childrenText +=
+`（${ages.join("、")}歲）`;
+
+}
+
+}
+
+
+
+/**********************************************
+ * LINE 訊息
+ **********************************************/
+
+const message =
+
+`🏡 香草貝兒訂房詢問
+
+📅 入住：${formatDate(ci)}
+📅 退房：${formatDate(co)}
+🌙 住宿：${nights}晚
+
+👨 大人：${adults}位
+${childrenText}
+🐶 毛孩：${pets}隻
+
+想詢問以上日期是否可以訂房，謝謝！`;
+
+
+
+/**********************************************
+ * LINE oaMessage
+ **********************************************/
+
+const lineURL =
+
+"https://line.me/R/oaMessage/" +
+
+encodeURIComponent(
+LINE_ID
+) +
+
+"/?" +
+
+encodeURIComponent(
+message
+);
+
+
+
+/**********************************************
+ * 開啟 LINE
+ **********************************************/
+
+window.location.href =
+lineURL;
 
 }
 
