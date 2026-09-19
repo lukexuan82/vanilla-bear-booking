@@ -26,6 +26,7 @@
 html,
 body{
   width:100%;
+  max-width:100%;
   overflow-x:hidden;
 }
 
@@ -52,6 +53,8 @@ body{
 ======================================== */
 
 .top{
+
+  width:100%;
 
   text-align:center;
 
@@ -99,6 +102,8 @@ body{
     calc(100% - 24px)
   );
 
+  max-width:650px;
+
   margin:12px auto;
 
   background:#fffdf9;
@@ -138,12 +143,20 @@ h2{
 
   gap:12px;
 
+  width:100%;
+
 }
 
 
 .date-box{
 
+  width:100%;
+
   min-width:0;
+
+  max-width:100%;
+
+  overflow:hidden;
 
 }
 
@@ -203,12 +216,16 @@ select{
 
   gap:10px;
 
+  width:100%;
+
 }
 
 
 .person-box{
 
   min-width:0;
+
+  width:100%;
 
   border:
     1px solid #eadfd5;
@@ -591,20 +608,28 @@ select{
 
   .card{
 
+    width:calc(100% - 24px);
+
+    max-width:none;
+
     padding:16px;
 
     border-radius:22px;
 
+    overflow:hidden;
+
   }
 
 
-  /* 日期改成上下排列，避免 iPhone 日期文字重疊 */
+  /* 日期上下排列 */
 
   .row{
 
     grid-template-columns:1fr;
 
     gap:12px;
+
+    width:100%;
 
   }
 
@@ -613,19 +638,39 @@ select{
 
     width:100%;
 
+    min-width:0;
+
+    max-width:100%;
+
+    overflow:hidden;
+
   }
 
 
+  /*
+     iPhone 日期輸入框縮小
+     避免超出白色背景
+  */
+
   input[type="date"]{
+
+    display:block;
 
     width:100%;
 
-    height:50px;
+    max-width:100%;
 
-    font-size:16px;
+    min-width:0;
 
-    padding:
-      0 10px;
+    height:46px;
+
+    font-size:15px;
+
+    padding:0 8px;
+
+    box-sizing:border-box;
+
+    border-radius:14px;
 
   }
 
@@ -637,10 +682,16 @@ select{
 
     gap:8px;
 
+    width:100%;
+
   }
 
 
   .person-box{
+
+    width:100%;
+
+    min-width:0;
 
     padding:10px 8px;
 
@@ -656,8 +707,13 @@ select{
 
   .person-box select{
 
-    padding:
-      0 7px;
+    width:100%;
+
+    min-width:0;
+
+    max-width:100%;
+
+    padding:0 7px;
 
     font-size:15px;
 
@@ -736,6 +792,15 @@ select{
 
   }
 
+
+  input[type="date"]{
+
+    font-size:14px;
+
+    padding:0 6px;
+
+  }
+
 }
 
 </style>
@@ -747,7 +812,7 @@ select{
 
 
 <!-- ========================================
-     香草貝兒標題
+     香草貝兒
 ======================================== -->
 
 <div class="top">
@@ -988,7 +1053,7 @@ select{
 
 
 <!-- ========================================
-     查詢
+     查詢按鈕
 ======================================== -->
 
 <button
@@ -1001,6 +1066,8 @@ select{
 </button>
 
 
+
+<!-- 查詢結果 -->
 
 <div id="result"></div>
 
@@ -1100,7 +1167,7 @@ const API =
 
 
 /************************************************
- * LINE
+ * LINE 官方帳號
  ************************************************/
 
 const LINE_ID =
@@ -1174,6 +1241,7 @@ function syncCalendarToDate(dateString){
 
 
   viewDate =
+
     new Date(
       year,
       month,
@@ -1756,7 +1824,7 @@ function calculateNights(
 
 
 /************************************************
- * LINE 自動帶入
+ * LINE 自動帶入訂房資料
  ************************************************/
 
 function openLineBooking(event){
