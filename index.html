@@ -130,7 +130,7 @@ h2{
 
 
 /* ========================================
-   日期
+   日期區
 ======================================== */
 
 .row{
@@ -156,7 +156,7 @@ h2{
 
   max-width:100%;
 
-  overflow:hidden;
+  overflow:visible;
 
 }
 
@@ -621,7 +621,7 @@ select{
   }
 
 
-  /* 日期上下排列 */
+  /* 日期改成上下排列 */
 
   .row{
 
@@ -642,15 +642,16 @@ select{
 
     max-width:100%;
 
-    overflow:hidden;
+    overflow:visible;
 
   }
 
 
-  /*
-     iPhone 日期輸入框縮小
-     避免超出白色背景
-  */
+  /* ======================================
+     iPhone 日期框
+     保留完整邊框
+     文字放大＋置中
+  ====================================== */
 
   input[type="date"]{
 
@@ -662,18 +663,56 @@ select{
 
     min-width:0;
 
-    height:46px;
+    height:50px;
 
-    font-size:15px;
+    font-size:18px;
+
+    font-weight:500;
+
+    text-align:center;
 
     padding:0 8px;
 
     box-sizing:border-box;
 
+    border:
+      1px solid #eadfd5;
+
     border-radius:14px;
+
+    background:#fff;
+
+    color:#40352f;
 
   }
 
+
+  /* iPhone / Safari 日期文字置中 */
+
+  input[type="date"]::-webkit-date-and-time-value{
+
+    text-align:center;
+
+  }
+
+
+  input[type="date"]::-webkit-datetime-edit{
+
+    text-align:center;
+
+  }
+
+
+  input[type="date"]::-webkit-datetime-edit-fields-wrapper{
+
+    text-align:center;
+
+  }
+
+
+  /* ======================================
+     人數
+  ====================================== */
 
   .people{
 
@@ -720,6 +759,10 @@ select{
   }
 
 
+  /* ======================================
+     標題
+  ====================================== */
+
   .brand{
 
     font-size:26px;
@@ -734,6 +777,10 @@ select{
   }
 
 
+  /* ======================================
+     日曆
+  ====================================== */
+
   .day{
 
     min-height:60px;
@@ -741,12 +788,20 @@ select{
   }
 
 
+  /* ======================================
+     LINE
+  ====================================== */
+
   .line-button{
 
     font-size:16px;
 
   }
 
+
+  /* ======================================
+     小孩年齡
+  ====================================== */
 
   .age-item select{
 
@@ -795,7 +850,7 @@ select{
 
   input[type="date"]{
 
-    font-size:14px;
+    font-size:17px;
 
     padding:0 6px;
 
@@ -812,7 +867,7 @@ select{
 
 
 <!-- ========================================
-     香草貝兒
+     香草貝兒標題
 ======================================== -->
 
 <div class="top">
@@ -1053,7 +1108,7 @@ select{
 
 
 <!-- ========================================
-     查詢按鈕
+     查詢
 ======================================== -->
 
 <button
@@ -1209,7 +1264,7 @@ function formatDate(s){
 
 
 /************************************************
- * 日期選擇後同步日曆
+ * 選擇日期後同步日曆月份
  ************************************************/
 
 function syncCalendarToDate(dateString){
