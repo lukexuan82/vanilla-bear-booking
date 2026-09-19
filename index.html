@@ -23,6 +23,11 @@
   box-sizing:border-box;
 }
 
+html,
+body{
+  width:100%;
+  overflow-x:hidden;
+}
 
 body{
 
@@ -42,15 +47,43 @@ body{
 }
 
 
+/* ========================================
+   香草貝兒標題
+======================================== */
+
 .top{
 
   text-align:center;
 
-  padding:16px 10px 8px;
+  padding:22px 10px 12px;
 
   color:#987d6d;
 
+}
+
+
+.brand{
+
+  font-size:28px;
+
+  font-weight:700;
+
+  letter-spacing:4px;
+
+  color:#6f5546;
+
+  margin-bottom:6px;
+
+}
+
+
+.subtitle{
+
   font-size:14px;
+
+  letter-spacing:1px;
+
+  color:#987d6d;
 
 }
 
@@ -100,9 +133,17 @@ h2{
   display:grid;
 
   grid-template-columns:
-    1fr 1fr;
+    minmax(0,1fr)
+    minmax(0,1fr);
 
   gap:12px;
+
+}
+
+
+.date-box{
+
+  min-width:0;
 
 }
 
@@ -124,6 +165,10 @@ input,
 select{
 
   width:100%;
+
+  max-width:100%;
+
+  min-width:0;
 
   height:48px;
 
@@ -162,6 +207,8 @@ select{
 
 
 .person-box{
+
+  min-width:0;
 
   border:
     1px solid #eadfd5;
@@ -227,12 +274,11 @@ select{
 
   width:100%;
 
-  height:44px;
+  height:46px;
 
-  font-size:15px;
+  font-size:16px;
 
-  padding:
-    0 10px;
+  padding:0 10px;
 
 }
 
@@ -543,10 +589,43 @@ select{
 
 @media(max-width:560px){
 
+  .card{
+
+    padding:16px;
+
+    border-radius:22px;
+
+  }
+
+
+  /* 日期改成上下排列，避免 iPhone 日期文字重疊 */
+
   .row{
 
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns:1fr;
+
+    gap:12px;
+
+  }
+
+
+  .date-box{
+
+    width:100%;
+
+  }
+
+
+  input[type="date"]{
+
+    width:100%;
+
+    height:50px;
+
+    font-size:16px;
+
+    padding:
+      0 10px;
 
   }
 
@@ -554,16 +633,47 @@ select{
   .people{
 
     grid-template-columns:
-      1fr 1fr 1fr;
+      repeat(3,1fr);
+
+    gap:8px;
 
   }
 
 
-  .card{
+  .person-box{
 
-    padding:16px;
+    padding:10px 8px;
 
-    border-radius:22px;
+  }
+
+
+  .person-box > label{
+
+    font-size:13px;
+
+  }
+
+
+  .person-box select{
+
+    padding:
+      0 7px;
+
+    font-size:15px;
+
+  }
+
+
+  .brand{
+
+    font-size:26px;
+
+  }
+
+
+  .subtitle{
+
+    font-size:13px;
 
   }
 
@@ -592,6 +702,42 @@ select{
 
 }
 
+
+/* ========================================
+   更小手機
+======================================== */
+
+@media(max-width:380px){
+
+  .people{
+
+    gap:6px;
+
+  }
+
+
+  .person-box{
+
+    padding:9px 6px;
+
+  }
+
+
+  .person-box > label{
+
+    font-size:12px;
+
+  }
+
+
+  .person-box select{
+
+    font-size:14px;
+
+  }
+
+}
+
 </style>
 
 </head>
@@ -600,21 +746,33 @@ select{
 <body>
 
 
+<!-- ========================================
+     香草貝兒標題
+======================================== -->
+
 <div class="top">
 
-  寵物友善包棟民宿・房況查詢
+  <div class="brand">
+    🌿 香草貝兒
+  </div>
+
+  <div class="subtitle">
+    寵物友善包棟民宿・房況查詢
+  </div>
 
 </div>
 
 
 
+<!-- ========================================
+     查詢卡片
+======================================== -->
+
 <section class="card">
 
 
 <h2>
-
 🗓️ 查詢住宿日期
-
 </h2>
 
 
@@ -622,7 +780,7 @@ select{
 <div class="row">
 
 
-<div>
+<div class="date-box">
 
 <label>
 入住日期
@@ -638,7 +796,7 @@ select{
 
 
 
-<div>
+<div class="date-box">
 
 <label>
 退房日期
@@ -844,8 +1002,6 @@ select{
 
 
 
-<!-- 查詢結果 -->
-
 <div id="result"></div>
 
 
@@ -944,7 +1100,7 @@ const API =
 
 
 /************************************************
- * LINE 官方帳號
+ * LINE
  ************************************************/
 
 const LINE_ID =
@@ -954,7 +1110,6 @@ const LINE_ID =
 
 
 let calendarData = [];
-
 
 let viewDate = new Date();
 
@@ -971,13 +1126,11 @@ function pad(n){
 }
 
 
-
 function key(y,m,d){
 
   return `${y}-${pad(m+1)}-${pad(d)}`;
 
 }
-
 
 
 function formatDate(s){
@@ -989,7 +1142,7 @@ function formatDate(s){
 
 
 /************************************************
- * 日期選擇後同步日曆月份
+ * 日期選擇後同步日曆
  ************************************************/
 
 function syncCalendarToDate(dateString){
@@ -1603,7 +1756,7 @@ function calculateNights(
 
 
 /************************************************
- * LINE 自動帶入訂房資料
+ * LINE 自動帶入
  ************************************************/
 
 function openLineBooking(event){
@@ -1667,8 +1820,6 @@ function openLineBooking(event){
 
 
 
-  /* 日期檢查 */
-
   if(
     !ci ||
     !co
@@ -1697,8 +1848,6 @@ function openLineBooking(event){
 
 
 
-  /* 住宿晚數 */
-
   const nights =
 
     calculateNights(
@@ -1708,26 +1857,19 @@ function openLineBooking(event){
 
 
 
-  /* 小孩文字 */
-
   let childrenText =
-
     "🧒 小孩：0位";
 
 
   if(children > 0){
 
     childrenText =
-
       `🧒 小孩：${children}位`;
 
 
-    if(
-      ages.length > 0
-    ){
+    if(ages.length > 0){
 
       childrenText +=
-
         `（${ages.join("、")}歲）`;
 
     }
@@ -1735,8 +1877,6 @@ function openLineBooking(event){
   }
 
 
-
-  /* LINE 訊息 */
 
   const message =
 
@@ -1751,13 +1891,6 @@ ${childrenText}
 想詢問以上日期是否可以訂房，謝謝！`;
 
 
-
-  /*
-   * LINE 官方格式
-   *
-   * LINE ID 必須百分比編碼
-   * 訊息也必須百分比編碼
-   */
 
   const encodedLineID =
 
@@ -1784,10 +1917,6 @@ ${childrenText}
     encodedMessage;
 
 
-
-  /*
-   * 使用 location 開啟 LINE
-   */
 
   window.location.href =
     lineURL;
@@ -1861,8 +1990,6 @@ async function checkBooking(){
 
 
 
-  /* 日期檢查 */
-
   if(
     !ci ||
     !co
@@ -1907,15 +2034,9 @@ async function checkBooking(){
 
 
 
-  /* 自動切換日曆 */
-
-  syncCalendarToDate(
-    ci
-  );
+  syncCalendarToDate(ci);
 
 
-
-  /* 查詢 */
 
   try{
 
@@ -1927,8 +2048,6 @@ async function checkBooking(){
       );
 
 
-
-    /* 晚數 */
 
     const d1 =
 
@@ -2020,8 +2139,6 @@ async function checkBooking(){
 
 
 
-    /* 可以訂房 */
-
     if(
       data.available
     ){
@@ -2096,9 +2213,6 @@ async function checkBooking(){
 
     }
 
-
-
-    /* 無法訂房 */
 
     else{
 
