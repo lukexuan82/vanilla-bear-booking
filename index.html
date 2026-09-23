@@ -177,7 +177,6 @@ label{
 
 /* ==================================================
    日期框
-   92% 寬度，左右置中
 ================================================== */
 
 .date-input-wrap{
@@ -270,7 +269,6 @@ label{
 
 /* ==================================================
    真正日期 input
-   透明，只負責叫出日期選擇器
 ================================================== */
 
 .date-input-wrap input[type="date"]{
@@ -528,7 +526,7 @@ select{
 
 
 /* ==================================================
-   LINE
+   LINE 按鈕
 ================================================== */
 
 .line-button{
@@ -564,12 +562,34 @@ select{
 
   border:0;
 
+  transition:
+    .2s ease;
+
 }
 
 
-.line-button:hover{
+/* ==================================================
+   LINE 無法訂房狀態
+================================================== */
 
-  opacity:.9;
+.line-button.disabled{
+
+  background:#b8b0aa;
+
+  color:#ffffff;
+
+  box-shadow:none;
+
+  cursor:not-allowed;
+
+}
+
+
+.line-button.loading{
+
+  background:#8e8178;
+
+  cursor:wait;
 
 }
 
@@ -742,8 +762,6 @@ select{
   }
 
 
-  /* 日期上下排列 */
-
   .row{
 
     grid-template-columns:1fr;
@@ -766,8 +784,6 @@ select{
   }
 
 
-  /* 日期框 */
-
   .date-input-wrap{
 
     width:92%;
@@ -780,8 +796,6 @@ select{
 
   }
 
-
-  /* 日期文字 */
 
   .date-display{
 
@@ -820,8 +834,6 @@ select{
 
   }
 
-
-  /* 人數 */
 
   .people{
 
@@ -868,8 +880,6 @@ select{
   }
 
 
-  /* 標題 */
-
   .brand{
 
     font-size:26px;
@@ -884,8 +894,6 @@ select{
   }
 
 
-  /* 日曆 */
-
   .day{
 
     min-height:60px;
@@ -893,16 +901,12 @@ select{
   }
 
 
-  /* LINE */
-
   .line-button{
 
     font-size:16px;
 
   }
 
-
-  /* 小孩 */
 
   .age-item select{
 
@@ -1010,9 +1014,7 @@ select{
 <div class="row">
 
 
-<!-- ==================================================
-     入住日期
-================================================== -->
+<!-- 入住日期 -->
 
 <div class="date-box">
 
@@ -1046,9 +1048,7 @@ select{
 
 
 
-<!-- ==================================================
-     退房日期
-================================================== -->
+<!-- 退房日期 -->
 
 <div class="date-box">
 
@@ -1261,7 +1261,7 @@ select{
 
 
 <!-- ==================================================
-     查詢按鈕
+     查詢房況
 ================================================== -->
 
 <button
@@ -1408,7 +1408,7 @@ function formatDate(s){
 
 
 /* ==================================================
-   日期顯示格式
+   日期顯示
 ================================================== */
 
 function formatDisplayDate(value){
@@ -1439,10 +1439,6 @@ function formatDisplayDate(value){
 
 }
 
-
-/* ==================================================
-   更新日期文字
-================================================== */
 
 function updateDateDisplay(id){
 
@@ -1476,6 +1472,14 @@ function updateDateDisplay(id){
     );
 
   }
+
+
+  /*
+     每次更換日期，
+     都重新判斷 LINE 按鈕是否可以使用
+  */
+
+  updateLineButtonState();
 
 }
 
@@ -1650,6 +1654,179 @@ function getChildAges(){
 
 
 /* ==================================================
+   判斷住宿期間是否碰到已滿日期
+================================================== */
+
+function hasBookedDate(
+  checkin,
+  checkout
+){
+
+  if(
+    !checkin ||
+    !checkout
+  ){
+
+    return false;
+
+  }
+
+
+  const start =
+    new Date(
+      checkin + "T00:00:00"
+    );
+
+
+  const end =
+    new Date(
+      checkout + "T00:00:00"
+    );
+
+
+  for(
+    let d = new Date(start);
+
+    d < end;
+
+    d.setDate(
+      d.getDate() + 1
+    )
+  ){
+
+    const k =
+      key(
+        d.getFullYear(),
+        d.getMonth(),
+        d.getDate()
+      );
+
+
+    const item =
+      calendarData.find(
+        x => x.date === k
+      );
+
+
+    if(
+      item &&
+      (
+        item.status === "已訂" ||
+        item.status === "已訂滿"
+      )
+    ){
+
+      return true;
+
+    }
+
+  }
+
+
+  return false;
+
+}
+
+
+/* ==================================================
+   更新 LINE 按鈕狀態
+================================================== */
+
+function updateLineButtonState(){
+
+  const button =
+    document.getElementById(
+      "lineButton"
+    );
+
+
+  if(!button){
+
+    return;
+
+  }
+
+
+  const ci =
+    document.getElementById(
+      "checkin"
+    ).value;
+
+
+  const co =
+    document.getElementById(
+      "checkout"
+    ).value;
+
+
+  button.classList.remove(
+    "disabled"
+  );
+
+
+  if(
+    !ci ||
+    !co
+  ){
+
+    button.disabled = false;
+
+    button.textContent =
+      "💚 立即 LINE 詢問訂房";
+
+    return;
+
+  }
+
+
+  if(
+    co <= ci
+  ){
+
+    button.disabled = true;
+
+    button.classList.add(
+      "disabled"
+    );
+
+    button.textContent =
+      "🔒 請先確認住宿日期";
+
+    return;
+
+  }
+
+
+  if(
+    hasBookedDate(
+      ci,
+      co
+    )
+  ){
+
+    button.disabled = true;
+
+    button.classList.add(
+      "disabled"
+    );
+
+    button.textContent =
+      "🔒 此日期無法訂房";
+
+    return;
+
+  }
+
+
+  button.disabled = false;
+
+  button.textContent =
+    "💚 立即 LINE 詢問訂房";
+
+}
+
+
+/* ==================================================
    JSONP 載入日曆
 ================================================== */
 
@@ -1682,6 +1859,9 @@ function loadCalendar(){
 
 
             renderCalendar();
+
+
+            updateLineButtonState();
 
 
             resolve(data);
@@ -1874,7 +2054,9 @@ function renderCalendar(){
 
   calendarData.forEach(
     x => {
+
       map[x.date] = x;
+
     }
   );
 
@@ -2048,13 +2230,19 @@ function calculateNights(
    LINE 自動帶入
 ================================================== */
 
-function openLineBooking(event){
+async function openLineBooking(event){
 
   if(event){
 
     event.preventDefault();
 
   }
+
+
+  const button =
+    document.getElementById(
+      "lineButton"
+    );
 
 
   const ci =
@@ -2097,6 +2285,10 @@ function openLineBooking(event){
     getChildAges();
 
 
+  /* ---------------------------------------------
+     基本日期檢查
+  --------------------------------------------- */
+
   if(
     !ci ||
     !co
@@ -2124,34 +2316,126 @@ function openLineBooking(event){
   }
 
 
-  const nights =
-    calculateNights(
+  /* ---------------------------------------------
+     第一層防呆：
+     直接檢查目前已載入的房況
+  --------------------------------------------- */
+
+  if(
+    hasBookedDate(
       ci,
       co
+    )
+  ){
+
+    button.disabled = true;
+
+    button.classList.add(
+      "disabled"
+    );
+
+    button.textContent =
+      "🔒 此日期無法訂房";
+
+
+    alert(
+      "這段住宿期間已有滿房日期，請重新選擇。"
     );
 
 
-  let childrenText =
-    "🧒 小孩：0位";
-
-
-  if(children > 0){
-
-    childrenText =
-      `🧒 小孩：${children}位`;
-
-
-    if(ages.length > 0){
-
-      childrenText +=
-        `（${ages.join("、")}歲）`;
-
-    }
+    return;
 
   }
 
 
-  const message =
+  /* ---------------------------------------------
+     第二層防呆：
+     再向 Google 試算表即時確認一次
+     
+     避免有人在網頁開啟後，
+     管理者才新增訂房日期。
+  --------------------------------------------- */
+
+  button.disabled = true;
+
+  button.classList.add(
+    "loading"
+  );
+
+  button.textContent =
+    "🔍 正在確認房況...";
+
+
+  try{
+
+    const data =
+      await checkBookingJSONP(
+        ci,
+        co
+      );
+
+
+    if(
+      !data ||
+      !data.available
+    ){
+
+      button.disabled = true;
+
+      button.classList.remove(
+        "loading"
+      );
+
+      button.classList.add(
+        "disabled"
+      );
+
+      button.textContent =
+        "🔒 此日期無法訂房";
+
+
+      alert(
+        "這段住宿期間已有滿房日期，請重新選擇。"
+      );
+
+
+      return;
+
+    }
+
+
+    /* -------------------------------------------
+       確認真的可以訂，再開 LINE
+    ------------------------------------------- */
+
+    const nights =
+      calculateNights(
+        ci,
+        co
+      );
+
+
+    let childrenText =
+      "🧒 小孩：0位";
+
+
+    if(children > 0){
+
+      childrenText =
+        `🧒 小孩：${children}位`;
+
+
+      if(ages.length > 0){
+
+        childrenText +=
+          `（${ages.join("、")}歲）`;
+
+      }
+
+    }
+
+
+    const message =
 
 `🏡 香草貝兒訂房詢問
 📅 入住：${formatDate(ci)}
@@ -2164,33 +2448,58 @@ ${childrenText}
 想詢問以上日期是否可以訂房，謝謝！`;
 
 
-  const encodedLineID =
-    encodeURIComponent(
-      LINE_ID
+    const encodedLineID =
+      encodeURIComponent(
+        LINE_ID
+      );
+
+
+    const encodedMessage =
+      encodeURIComponent(
+        message
+      );
+
+
+    /*
+       注意：
+       不使用 ?text=
+       避免 LINE 顯示 text=
+    */
+
+    const lineURL =
+      "https://line.me/R/oaMessage/" +
+      encodedLineID +
+      "/?" +
+      encodedMessage;
+
+
+    window.location.href =
+      lineURL;
+
+  }
+
+
+  catch(error){
+
+    console.error(
+      error
     );
 
 
-  const encodedMessage =
-    encodeURIComponent(
-      message
+    button.disabled = false;
+
+    button.classList.remove(
+      "loading"
     );
 
-
-  /*
-     重要：
-     這裡故意沒有 ?text=
-     否則 LINE 會把 text= 當成訊息內容
-  */
-
-  const lineURL =
-    "https://line.me/R/oaMessage/" +
-    encodedLineID +
-    "/?" +
-    encodedMessage;
+    updateLineButtonState();
 
 
-  window.location.href =
-    lineURL;
+    alert(
+      "目前無法確認房況，請稍後再試。"
+    );
+
+  }
 
 }
 
@@ -2247,6 +2556,10 @@ async function checkBooking(){
     );
 
 
+  /* ---------------------------------------------
+     日期檢查
+  --------------------------------------------- */
+
   if(
     !ci ||
     !co
@@ -2285,12 +2598,37 @@ async function checkBooking(){
 
     `;
 
+    updateLineButtonState();
+
     return;
 
   }
 
 
-  syncCalendarToDate(ci);
+  syncCalendarToDate(
+    ci
+  );
+
+
+  /* ---------------------------------------------
+     查詢中
+  --------------------------------------------- */
+
+  result.innerHTML = `
+
+    <div class="result">
+
+      <h3>
+        🔍 正在確認房況...
+      </h3>
+
+      <p>
+        請稍候。
+      </p>
+
+    </div>
+
+  `;
 
 
   try{
@@ -2326,7 +2664,9 @@ async function checkBooking(){
 
     calendarData.forEach(
       x => {
+
         map[x.date] = x;
+
       }
     );
 
@@ -2376,80 +2716,13 @@ async function checkBooking(){
       : "";
 
 
+    /* ---------------------------------------------
+       已滿房
+    --------------------------------------------- */
+
     if(
-      data.available
+      !data.available
     ){
-
-      result.innerHTML = `
-
-        <div class="result">
-
-          <h3>
-
-            <span class="dot"></span>
-
-            可以訂房
-
-          </h3>
-
-
-          <p>
-
-            ${formatDate(ci)}
-
-            ～
-
-            ${formatDate(co)}
-
-            共
-
-            <b>
-              ${nights} 晚
-            </b>
-
-          </p>
-
-
-          <p>
-
-            大人 ${adults} 位
-
-            ・
-
-            小孩 ${children} 位
-
-            ${agesText}
-
-            ・
-
-            毛孩 ${pets} 隻
-
-          </p>
-
-
-          <p>
-
-            平日 ${weekdayNights} 晚
-
-            ・
-
-            假日 ${holidayNights} 晚
-
-          </p>
-
-
-          <p>
-            本次住宿期間目前皆可預訂。
-          </p>
-
-        </div>
-
-      `;
-
-    }
-
-
-    else{
 
       result.innerHTML = `
 
@@ -2497,7 +2770,87 @@ async function checkBooking(){
 
       `;
 
+
+      updateLineButtonState();
+
+
+      return;
+
     }
+
+
+    /* ---------------------------------------------
+       可以訂房
+    --------------------------------------------- */
+
+    result.innerHTML = `
+
+      <div class="result">
+
+        <h3>
+
+          <span class="dot"></span>
+
+          可以訂房
+
+        </h3>
+
+
+        <p>
+
+          ${formatDate(ci)}
+
+          ～
+
+          ${formatDate(co)}
+
+          共
+
+          <b>
+            ${nights} 晚
+          </b>
+
+        </p>
+
+
+        <p>
+
+          大人 ${adults} 位
+
+          ・
+
+          小孩 ${children} 位
+
+          ${agesText}
+
+          ・
+
+          毛孩 ${pets} 隻
+
+        </p>
+
+
+        <p>
+
+          平日 ${weekdayNights} 晚
+
+          ・
+
+          假日 ${holidayNights} 晚
+
+        </p>
+
+
+        <p>
+          本次住宿期間目前皆可預訂。
+        </p>
+
+      </div>
+
+    `;
+
+
+    updateLineButtonState();
 
   }
 
