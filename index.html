@@ -12,6 +12,7 @@
 
 <title>香草貝兒｜房況查詢</title>
 
+
 <style>
 
 /* ==================================================
@@ -30,15 +31,20 @@ body{
 }
 
 body{
+
   margin:0;
+
   background:#f8f5f0;
+
   color:#4b3b32;
+
   font-family:
     -apple-system,
     BlinkMacSystemFont,
     "Noto Sans TC",
     "Microsoft JhengHei",
     sans-serif;
+
 }
 
 
@@ -47,23 +53,39 @@ body{
 ================================================== */
 
 .top{
+
   width:100%;
+
   text-align:center;
+
   padding:22px 10px 12px;
+
 }
+
 
 .brand{
+
   font-size:28px;
+
   font-weight:700;
+
   letter-spacing:4px;
+
   color:#6f5546;
+
   margin-bottom:6px;
+
 }
 
+
 .subtitle{
+
   font-size:14px;
+
   letter-spacing:1px;
+
   color:#987d6d;
+
 }
 
 
@@ -72,6 +94,7 @@ body{
 ================================================== */
 
 .card{
+
   width:min(
     650px,
     calc(100% - 24px)
@@ -91,6 +114,7 @@ body{
 
   box-shadow:
     0 10px 30px rgba(92,70,50,.08);
+
 }
 
 
@@ -99,11 +123,13 @@ body{
 ================================================== */
 
 h2{
+
   font-size:20px;
 
   margin:0 0 16px;
 
   color:#40352f;
+
 }
 
 
@@ -112,6 +138,7 @@ h2{
 ================================================== */
 
 .row{
+
   display:grid;
 
   grid-template-columns:
@@ -121,17 +148,23 @@ h2{
   gap:12px;
 
   width:100%;
+
 }
 
+
 .date-box{
+
   width:100%;
 
   min-width:0;
 
   max-width:100%;
+
 }
 
+
 .date-box > label{
+
   display:block;
 
   font-size:13px;
@@ -139,11 +172,12 @@ h2{
   color:#9a7765;
 
   margin:0 0 7px;
+
 }
 
 
 /* ==================================================
-   日期框
+   ★ 日期框
    整個框都可以點
 ================================================== */
 
@@ -169,74 +203,58 @@ h2{
 
   cursor:pointer;
 
+  user-select:none;
+
+  -webkit-user-select:none;
+
 }
 
 
 /* ==================================================
-   真正日期 input
+   ★ 日期顯示文字
 ================================================== */
 
-.date-input-wrap input[type="date"]{
+.date-display{
 
   position:absolute;
 
-  inset:0;
+  top:50%;
+
+  left:50%;
 
   width:100%;
 
-  height:100%;
+  height:auto;
 
-  margin:0;
+  transform:
+    translate(-50%, -50%);
 
-  padding:0 48px 0 12px;
+  display:block;
 
-  border:0;
-
-  outline:none;
-
-  border-radius:16px;
-
-  background:#ffffff;
-
-  color:#40352f;
-
-  font-family:inherit;
+  padding:0 45px 0 12px;
 
   font-size:20px;
 
   font-weight:500;
 
+  line-height:1.2;
+
+  color:#40352f;
+
   text-align:center;
 
-  cursor:pointer;
+  white-space:nowrap;
 
-  appearance:auto;
+  pointer-events:none;
 
-  -webkit-appearance:auto;
-
-  z-index:2;
+  z-index:1;
 
 }
 
 
-/* Chrome / Edge 日期圖示 */
-
-.date-input-wrap input[type="date"]::-webkit-calendar-picker-indicator{
-
-  position:absolute;
-
-  right:12px;
-
-  width:22px;
-
-  height:22px;
-
-  cursor:pointer;
-
-}
-
-
-/* 日期圖示 */
+/* ==================================================
+   日期圖示
+================================================== */
 
 .date-icon{
 
@@ -255,7 +273,44 @@ h2{
 
   pointer-events:none;
 
-  z-index:3;
+  z-index:1;
+
+}
+
+
+/* ==================================================
+   ★ 真正日期 input
+   隱藏，只讓外層框負責點擊
+================================================== */
+
+.date-input-wrap input[type="date"]{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+
+  height:100%;
+
+  margin:0;
+
+  padding:0;
+
+  border:0;
+
+  outline:none;
+
+  background:transparent;
+
+  opacity:0;
+
+  cursor:pointer;
+
+  pointer-events:none;
+
+  z-index:0;
+
 }
 
 
@@ -275,7 +330,9 @@ h2{
   gap:10px;
 
   width:100%;
+
 }
+
 
 .person-box{
 
@@ -291,7 +348,9 @@ h2{
   padding:12px;
 
   background:#fffaf5;
+
 }
+
 
 .person-box > label{
 
@@ -302,7 +361,9 @@ h2{
   font-size:14px;
 
   color:#9a7765;
+
 }
+
 
 select{
 
@@ -326,6 +387,7 @@ select{
   font-size:16px;
 
   color:#40352f;
+
 }
 
 
@@ -344,7 +406,9 @@ select{
   gap:10px;
 
   width:100%;
+
 }
+
 
 .age-item{
 
@@ -353,7 +417,9 @@ select{
   font-size:13px;
 
   color:#806b5d;
+
 }
+
 
 .age-item label{
 
@@ -362,7 +428,9 @@ select{
   font-size:12px;
 
   margin-bottom:5px;
+
 }
+
 
 .age-item select{
 
@@ -371,6 +439,7 @@ select{
   height:46px;
 
   font-size:16px;
+
 }
 
 
@@ -399,7 +468,9 @@ select{
   margin-top:16px;
 
   cursor:pointer;
+
 }
+
 
 .search-button:hover{
 
@@ -421,26 +492,34 @@ select{
   border-radius:18px;
 
   background:#edf7f0;
+
 }
+
 
 .result.bad{
 
   background:#fbe9e6;
+
 }
+
 
 .result h3{
 
   margin:0 0 8px;
 
   font-size:18px;
+
 }
+
 
 .result p{
 
   margin:5px 0;
 
   line-height:1.6;
+
 }
+
 
 .dot{
 
@@ -457,11 +536,14 @@ select{
   margin-right:7px;
 
   background:#49d58d;
+
 }
+
 
 .bad .dot{
 
   background:#e96b63;
+
 }
 
 
@@ -487,6 +569,8 @@ select{
 
   color:#ffffff;
 
+  text-decoration:none;
+
   font-size:17px;
 
   font-weight:700;
@@ -501,7 +585,9 @@ select{
   border:0;
 
   transition:.2s ease;
+
 }
+
 
 .line-button.disabled{
 
@@ -512,13 +598,16 @@ select{
   box-shadow:none;
 
   cursor:not-allowed;
+
 }
+
 
 .line-button.loading{
 
   background:#8e8178;
 
   cursor:wait;
+
 }
 
 
@@ -531,7 +620,9 @@ select{
   padding:18px;
 
   margin-top:14px;
+
 }
+
 
 .cal-head{
 
@@ -542,7 +633,9 @@ select{
   align-items:center;
 
   margin-bottom:10px;
+
 }
+
 
 .nav{
 
@@ -565,14 +658,18 @@ select{
   padding:0;
 
   cursor:pointer;
+
 }
+
 
 .month{
 
   font-size:20px;
 
   font-weight:600;
+
 }
+
 
 .week{
 
@@ -590,7 +687,9 @@ select{
   font-size:12px;
 
   margin-bottom:6px;
+
 }
+
 
 .days{
 
@@ -600,7 +699,9 @@ select{
     repeat(7,1fr);
 
   gap:5px;
+
 }
+
 
 .day{
 
@@ -613,25 +714,33 @@ select{
   text-align:center;
 
   font-size:14px;
+
 }
+
 
 .available{
 
   background:#edf7f0;
+
 }
+
 
 .full{
 
   background:#fbe8e5;
 
   color:#a94a40;
+
 }
+
 
 .holiday{
 
   box-shadow:
     inset 0 -3px 0 #c89a36;
+
 }
+
 
 .day small{
 
@@ -640,11 +749,14 @@ select{
   font-size:10px;
 
   margin-top:6px;
+
 }
+
 
 .empty{
 
   background:transparent;
+
 }
 
 
@@ -663,6 +775,7 @@ select{
     padding:16px;
 
     border-radius:22px;
+
   }
 
 
@@ -673,6 +786,7 @@ select{
     gap:12px;
 
     width:100%;
+
   }
 
 
@@ -683,12 +797,46 @@ select{
     max-width:92%;
 
     height:54px;
+
+    margin:0 auto;
+
   }
 
 
-  .date-input-wrap input[type="date"]{
+  .date-display{
 
-    font-size:19px;
+    top:50%;
+
+    left:50%;
+
+    width:100%;
+
+    padding:0 45px 0 12px;
+
+    font-size:20px;
+
+    font-weight:500;
+
+    line-height:1.2;
+
+    text-align:center;
+
+    transform:
+      translate(-50%, -50%);
+
+  }
+
+
+  .date-icon{
+
+    right:13px;
+
+    top:50%;
+
+    transform:
+      translateY(-50%);
+
+    font-size:18px;
 
   }
 
@@ -701,6 +849,7 @@ select{
     gap:8px;
 
     width:100%;
+
   }
 
 
@@ -711,12 +860,14 @@ select{
     min-width:0;
 
     padding:10px 8px;
+
   }
 
 
   .person-box > label{
 
     font-size:13px;
+
   }
 
 
@@ -731,30 +882,35 @@ select{
     padding:0 7px;
 
     font-size:15px;
+
   }
 
 
   .brand{
 
     font-size:26px;
+
   }
 
 
   .subtitle{
 
     font-size:13px;
+
   }
 
 
   .day{
 
     min-height:60px;
+
   }
 
 
   .line-button{
 
     font-size:16px;
+
   }
 
 
@@ -763,6 +919,7 @@ select{
     height:46px;
 
     font-size:16px;
+
   }
 
 }
@@ -777,24 +934,28 @@ select{
   .people{
 
     gap:6px;
+
   }
 
 
   .person-box{
 
     padding:9px 6px;
+
   }
 
 
   .person-box > label{
 
     font-size:12px;
+
   }
 
 
   .person-box select{
 
     font-size:14px;
+
   }
 
 
@@ -803,12 +964,16 @@ select{
     width:92%;
 
     max-width:92%;
+
   }
 
 
-  .date-input-wrap input[type="date"]{
+  .date-display{
 
-    font-size:17px;
+    font-size:18px;
+
+    line-height:1.2;
+
   }
 
 }
@@ -863,23 +1028,35 @@ select{
       </label>
 
 
+      <!-- ★ 整個日期框都可以點 -->
+
       <div
         class="date-input-wrap"
         onclick="openDatePicker('checkin')"
+        onkeydown="handleDateKey(event,'checkin')"
+        role="button"
+        tabindex="0"
+        aria-label="選擇入住日期"
       >
 
-        <input
-          id="checkin"
-          type="date"
-          aria-label="入住日期"
-          onchange="updateDateDisplay('checkin')"
-          onclick="event.stopPropagation()"
-        >
+        <div
+          id="checkinDisplay"
+          class="date-display"
+        ></div>
 
 
         <span class="date-icon">
           📅
         </span>
+
+
+        <input
+          id="checkin"
+          type="date"
+          tabindex="-1"
+          onchange="updateDateDisplay('checkin')"
+          aria-hidden="true"
+        >
 
       </div>
 
@@ -897,23 +1074,35 @@ select{
       </label>
 
 
+      <!-- ★ 整個日期框都可以點 -->
+
       <div
         class="date-input-wrap"
         onclick="openDatePicker('checkout')"
+        onkeydown="handleDateKey(event,'checkout')"
+        role="button"
+        tabindex="0"
+        aria-label="選擇退房日期"
       >
 
-        <input
-          id="checkout"
-          type="date"
-          aria-label="退房日期"
-          onchange="updateDateDisplay('checkout')"
-          onclick="event.stopPropagation()"
-        >
+        <div
+          id="checkoutDisplay"
+          class="date-display"
+        ></div>
 
 
         <span class="date-icon">
           📅
         </span>
+
+
+        <input
+          id="checkout"
+          type="date"
+          tabindex="-1"
+          onchange="updateDateDisplay('checkout')"
+          aria-hidden="true"
+        >
 
       </div>
 
@@ -1241,7 +1430,49 @@ function formatDate(s){
 
 
 /* ==================================================
-   ★ 開啟日期選擇器
+   日期顯示
+================================================== */
+
+function formatDisplayDate(value){
+
+  if(!value){
+
+    return "請選擇日期";
+
+  }
+
+
+  const parts =
+    value.split("-");
+
+
+  if(parts.length !== 3){
+
+    return "請選擇日期";
+
+  }
+
+
+  return (
+
+    `${parts[0]}年` +
+
+    `${Number(parts[1])}月` +
+
+    `${Number(parts[2])}日`
+
+  );
+
+}
+
+
+/* ==================================================
+   ★★★ 開啟日期選擇器 ★★★
+   
+   這裡是這次真正修正的核心。
+   
+   不再讓 input 自己接收滑鼠，
+   而是由外面的整個日期框呼叫 showPicker。
 ================================================== */
 
 function openDatePicker(id){
@@ -1251,20 +1482,19 @@ function openDatePicker(id){
 
 
   if(!input){
+
     return;
+
   }
 
 
-  /*
-    Chrome / Edge / 現代桌機瀏覽器
-    直接使用原生 showPicker()
-  */
+  /* Chrome / Edge / 支援 showPicker 的瀏覽器 */
 
-  try{
+  if(
+    typeof input.showPicker === "function"
+  ){
 
-    if(
-      typeof input.showPicker === "function"
-    ){
+    try{
 
       input.showPicker();
 
@@ -1272,22 +1502,19 @@ function openDatePicker(id){
 
     }
 
+    catch(error){
+
+      console.log(
+        "showPicker 開啟失敗，使用備援方式",
+        error
+      );
+
+    }
+
   }
 
-  catch(error){
 
-    console.log(
-      "showPicker 不可用",
-      error
-    );
-
-  }
-
-
-  /*
-    如果瀏覽器不支援 showPicker，
-    使用 focus + click 作為備援
-  */
+  /* 不支援 showPicker 的瀏覽器 */
 
   try{
 
@@ -1300,9 +1527,29 @@ function openDatePicker(id){
   catch(error){
 
     console.log(
-      "日期選擇器開啟失敗",
+      "日期選擇器無法開啟",
       error
     );
+
+  }
+
+}
+
+
+/* ==================================================
+   ★ 鍵盤也可以開日期
+================================================== */
+
+function handleDateKey(event,id){
+
+  if(
+    event.key === "Enter" ||
+    event.key === " "
+  ){
+
+    event.preventDefault();
+
+    openDatePicker(id);
 
   }
 
@@ -1319,9 +1566,26 @@ function updateDateDisplay(id){
     document.getElementById(id);
 
 
-  if(!input){
+  const display =
+    document.getElementById(
+      id + "Display"
+    );
+
+
+  if(
+    !input ||
+    !display
+  ){
+
     return;
+
   }
+
+
+  display.textContent =
+    formatDisplayDate(
+      input.value
+    );
 
 
   if(input.value){
@@ -1345,7 +1609,9 @@ function updateDateDisplay(id){
 function syncCalendarToDate(dateString){
 
   if(!dateString){
+
     return;
+
   }
 
 
@@ -1354,7 +1620,9 @@ function syncCalendarToDate(dateString){
 
 
   if(parts.length !== 3){
+
     return;
+
   }
 
 
@@ -1504,7 +1772,7 @@ function getChildAges(){
 
 
 /* ==================================================
-   判斷住宿期間是否碰到已滿日期
+   判斷住宿期間是否碰到已訂日期
 ================================================== */
 
 function hasBookedDate(
@@ -1591,7 +1859,9 @@ function updateLineButtonState(){
 
 
   if(!button){
+
     return;
+
   }
 
 
@@ -1619,10 +1889,8 @@ function updateLineButtonState(){
 
     button.disabled = false;
 
-
     button.textContent =
       "💚 立即 LINE 詢問訂房";
-
 
     return;
 
@@ -1635,15 +1903,12 @@ function updateLineButtonState(){
 
     button.disabled = true;
 
-
     button.classList.add(
       "disabled"
     );
 
-
     button.textContent =
       "🔒 請先確認住宿日期";
-
 
     return;
 
@@ -1659,15 +1924,12 @@ function updateLineButtonState(){
 
     button.disabled = true;
 
-
     button.classList.add(
       "disabled"
     );
 
-
     button.textContent =
       "🔒 此日期無法訂房";
-
 
     return;
 
@@ -1675,7 +1937,6 @@ function updateLineButtonState(){
 
 
   button.disabled = false;
-
 
   button.textContent =
     "💚 立即 LINE 詢問訂房";
@@ -1692,7 +1953,6 @@ function loadCalendar(){
   return new Promise(
 
     (resolve,reject)=>{
-
 
       const callbackName =
         "calendarCallback_" +
@@ -1725,7 +1985,6 @@ function loadCalendar(){
             resolve(data);
 
           }
-
 
           finally{
 
@@ -1792,7 +2051,6 @@ function checkBookingJSONP(
 
     (resolve,reject)=>{
 
-
       const callbackName =
         "checkCallback_" +
         Date.now();
@@ -1812,7 +2070,6 @@ function checkBookingJSONP(
             resolve(data);
 
           }
-
 
           finally{
 
@@ -2146,8 +2403,6 @@ async function openLineBooking(event){
     getChildAges();
 
 
-  /* 基本日期檢查 */
-
   if(
     !ci ||
     !co
@@ -2177,8 +2432,6 @@ async function openLineBooking(event){
   }
 
 
-  /* 第一層防呆 */
-
   if(
     hasBookedDate(
       ci,
@@ -2188,11 +2441,9 @@ async function openLineBooking(event){
 
     button.disabled = true;
 
-
     button.classList.add(
       "disabled"
     );
-
 
     button.textContent =
       "🔒 此日期無法訂房";
@@ -2208,15 +2459,11 @@ async function openLineBooking(event){
   }
 
 
-  /* 第二層即時確認 */
-
   button.disabled = true;
-
 
   button.classList.add(
     "loading"
   );
-
 
   button.textContent =
     "🔍 正在確認房況...";
@@ -2238,16 +2485,13 @@ async function openLineBooking(event){
 
       button.disabled = true;
 
-
       button.classList.remove(
         "loading"
       );
 
-
       button.classList.add(
         "disabled"
       );
-
 
       button.textContent =
         "🔒 此日期無法訂房";
@@ -2330,16 +2574,16 @@ ${childrenText}
 
   catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
     button.disabled = false;
 
-
     button.classList.remove(
       "loading"
     );
-
 
     updateLineButtonState();
 
@@ -2405,8 +2649,6 @@ async function checkBooking(){
     );
 
 
-  /* 日期檢查 */
-
   if(
     !ci ||
     !co
@@ -2455,7 +2697,9 @@ async function checkBooking(){
   }
 
 
-  syncCalendarToDate(ci);
+  syncCalendarToDate(
+    ci
+  );
 
 
   result.innerHTML = `
@@ -2560,8 +2804,6 @@ async function checkBooking(){
       : "";
 
 
-    /* 已滿房 */
-
     if(
       !data.available
     ){
@@ -2583,9 +2825,7 @@ async function checkBooking(){
 
             ${formatDate(ci)}
 
-            ～
-
-            ${formatDate(co)}
+            ～${formatDate(co)}
 
             的住宿期間已有已訂日期。
 
@@ -2621,8 +2861,6 @@ async function checkBooking(){
     }
 
 
-    /* 可以訂房 */
-
     result.innerHTML = `
 
       <div class="result">
@@ -2640,9 +2878,7 @@ async function checkBooking(){
 
           ${formatDate(ci)}
 
-          ～
-
-          ${formatDate(co)}
+          ～${formatDate(co)}
 
           共
 
@@ -2699,7 +2935,9 @@ async function checkBooking(){
 
   catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
     result.innerHTML = `
@@ -2789,7 +3027,9 @@ loadCalendar()
 
     error => {
 
-      console.error(error);
+      console.error(
+        error
+      );
 
 
       document.getElementById(
@@ -2813,6 +3053,7 @@ loadCalendar()
     }
 
   );
+
 
 </script>
 
